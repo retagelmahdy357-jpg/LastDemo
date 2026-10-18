@@ -9,7 +9,7 @@ namespace LastDemo.UnitOfWork
         private readonly AppDbContext context;
         public IGenericRepo<User> Users { get; }
 
-        public IGenericRepo<Category> Categories { get; }
+        public ICategory Categories { get; }
 
         public IProduct Products { get; }
 
@@ -23,7 +23,7 @@ namespace LastDemo.UnitOfWork
         {
             await context.SaveChangesAsync();
         }
-        public UnitOfWorkRepo(AppDbContext _context, IGenericRepo<User> _Users, IGenericRepo<Category> _Categories, IProduct _Products, IOrder _Orders, IGenericRepo<OrderIteam> _OrderIteams, IAuth _auth)
+        public UnitOfWorkRepo(AppDbContext _context, IGenericRepo<User> _Users, ICategory _Categories, IProduct _Products, IOrder _Orders, IGenericRepo<OrderIteam> _OrderIteams, IAuth _auth)
         {
             context = _context;
             Users = _Users;

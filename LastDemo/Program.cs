@@ -38,6 +38,7 @@ namespace LastDemo
             builder.Services.AddScoped<IUnitOfWork, UnitOfWorkRepo>();
             builder.Services.AddScoped<IProduct, ProductRepo>();
             builder.Services.AddScoped<IOrder, OrderRepo>();
+            builder.Services.AddScoped<ICategory, CategoryRepo>();
 
             builder.Services.AddAuthentication(x =>
             {

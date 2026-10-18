@@ -6,7 +6,7 @@ namespace LastDemo.UnitOfWork
     public interface IUnitOfWork
     {
         public IGenericRepo<User> Users {  get; }
-        public IGenericRepo<Category> Categories { get; }
+        public ICategory Categories { get; }
         public IProduct Products { get; }
         public IOrder Orders { get; }
         public IGenericRepo<OrderIteam>OrderIteams { get; }

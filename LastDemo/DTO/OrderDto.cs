@@ -8,9 +8,8 @@ namespace LastDemo.DTO
         public DateTime OrderDate { get; set; }
       
         public string Status { get; set; }
-        [Required]
-        public decimal TotalAmount { get; set; }
-        
+       
+        public decimal TotalAmmount {  get; set; }
         public int UserId { get; set; }
         public List< OrderItemProductDto> OrderIteams { get; set; }
     }

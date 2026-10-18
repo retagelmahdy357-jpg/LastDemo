@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Immutable;
+using AutoMapper;
 using LastDemo.DTO;
 using LastDemo.Model;
 using LastDemo.UnitOfWork;
@@ -20,26 +21,60 @@ namespace LastDemo.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [Authorize(Roles = "Customer")]
+       // [Authorize(Roles = "Customer")]
         [HttpPost("AddOrder")]
         public async Task<IActionResult> Add(OrderDto orderdto)
         {
-            //var cus = await _unitOfWork.Users.GetById(orderdto.UserId);
-            //if (cus.Role != "Customer")
-            //{
-            //    return BadRequest("You are not Customer");
-            //}
+
 
             var map = _mapper.Map<Order>(orderdto);
+            map.TotalAmount = map.OrderIteams.Sum(x => x.Quantity * x.UnitPrice);
             await _unitOfWork.Orders.add(map);
             await _unitOfWork.Save();
             return Created();
         }
 
+
+
+        [HttpGet("OrderById{id}")]
+        public async Task<IActionResult> GetByIdOrder(int id)
+        {
+            var o = await _unitOfWork.Orders.GetByIdList(id);
+            var op = new OrderDto
+            {
+                OrderDate = DateTime.Now,
+                Status = o.Status,
+                TotalAmmount = o.OrderIteams.Sum(x => x.Quantity * x.UnitPrice),
+                OrderIteams = o.OrderIteams.Select(x => new OrderItemProductDto
+                {
+                    ProductId = x.ProductId,
+                    Quantity = x.Quantity,
+                    UnitPrice = x.UnitPrice,
+                }).ToList(),  
+
+            };
+            return Ok(op);
+
+
+           
+        }
+
+
+
+
+
+
+
+
+
+
+
+
         [HttpGet("ById{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var o=await _unitOfWork.Orders.GetByIdList(id);
+         //   o.TotalAmount=o.OrderIteams.
             var map=_mapper.Map<OrderDto>(o);
             return Ok(map);
         }

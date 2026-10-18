@@ -17,6 +17,25 @@ namespace LastDemo.Repo
         {
             return await _context.Orders.Include(x=>x.OrderIteams).FirstOrDefaultAsync(x=>x.Id==id);
         }
+        //public async Task<Order>GettbyidOrder(int id)
+        //{
+        //    return await _context.Orders.Include(x => x.OrderIteams).FirstOrDefaultAsync(x=>x.Id==id);
+        //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public async Task<decimal> TotalRevenue()
         {
