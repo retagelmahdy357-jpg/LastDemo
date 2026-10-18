@@ -13,6 +13,8 @@ namespace LastDemo.Mapping
              CreateMap<Product,PatchProductDto>().ReverseMap();
              CreateMap<Order,OrderDto>().ReverseMap();
              CreateMap<OrderIteam, OrderItemProductDto>().ReverseMap();
+             CreateMap<OrderIteam, UnitPriceDTO>().ReverseMap();
+
              CreateMap<Order, PatchOrderDto>().ReverseMap();
         }
     }

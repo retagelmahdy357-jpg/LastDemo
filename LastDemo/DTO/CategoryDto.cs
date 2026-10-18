@@ -6,6 +6,7 @@ namespace LastDemo.DTO
     {
         public string Name { get; set; }
         [MaxLength(200)]
-        public string Description { get; set; }
+        //public string Description { get; set; }
+        public List<ProductDto> Products { get; set; }
     }
 }

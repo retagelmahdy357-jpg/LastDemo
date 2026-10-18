@@ -18,6 +18,30 @@ namespace LastDemo.Controllers
              _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
+
+        [HttpGet("AllProducts")]
+        public async Task<IActionResult> AllProductsCategory()
+        {
+            var c = await _unitOfWork.Categories.GetProductsCategry();
+           var map=_mapper.Map<List<CategoryDto>>(c);
+            return Ok(map);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         [HttpGet("All")]
         public async Task<IActionResult> GetAll()
         {

@@ -18,11 +18,30 @@ namespace LastDemo.Controllers
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
+        [HttpPost("AddProd")]
+        public async Task<IActionResult> Add(ProductDto productDto)
+        {
+            var c=await _unitOfWork.Categories.GetById(productDto.CategoryId);
+            if (c == null)
+            {
+                return NotFound("This Category Not Found");
+            }
+            var map=_mapper.Map<Product>(productDto);
+            await _unitOfWork.Products.add(map);
+            await _unitOfWork.Save();
+            return Created()
+;        }
+
+
+
+
+
+
         [HttpGet("Pagiation")]
 
-        public async Task<IActionResult> GetPagenation(int catid, int pagenum, int pageSize)
+        public async Task<IActionResult> GetPagenation(int catid, int pagenum, int pageSize,string SortBy)
         {
-            var p=await _unitOfWork.Products.Pagination(catid, pagenum, pageSize);
+            var p=await _unitOfWork.Products.Pagination(catid, pagenum, pageSize,SortBy);
             var map=_mapper.Map<List<ProductDto>>(p);
             return Ok(map);
 
@@ -43,19 +62,19 @@ namespace LastDemo.Controllers
             var map = _mapper.Map<ProductDto>(p);
             return Ok(map);
         }
-        [HttpPost("AddProduct")]
-        public async Task<IActionResult> Add(ProductDto productDto)
-        {
-            var cat = _unitOfWork.Categories.GetAll();
-            if ( productDto.CategoryId!=cat.Id)
-            {
-                return BadRequest("This Category Dosenot Exsit");
-            } 
-            var map = _mapper.Map<Product>(productDto);
-            await _unitOfWork.Products.add(map);
-            await _unitOfWork.Save();
-            return Created();
-        }
+        //[HttpPost("AddProduct")]
+        //public async Task<IActionResult> Add(ProductDto productDto)
+        //{
+        //    var cat = _unitOfWork.Categories.GetAll();
+        //    if ( productDto.CategoryId!=cat.Id)
+        //    {
+        //        return BadRequest("This Category Dosenot Exsit");
+        //    } 
+        //    var map = _mapper.Map<Product>(productDto);
+        //    await _unitOfWork.Products.add(map);
+        //    await _unitOfWork.Save();
+        //    return Created();
+        //}
 
         [HttpPut("Update{id}")]
         public async Task<IActionResult> Update(int id, ProductDto productDto)
